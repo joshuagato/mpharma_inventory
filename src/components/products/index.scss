@@ -98,7 +98,7 @@
           }
 
           .historical-prices-detail {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
 
             p {
               margin: 0;
@@ -111,6 +111,13 @@
                 color: #3A3A38;
               }
             }
+          }
+
+          hr {
+            width:70%;
+            height:1px;
+            background: #605f5f;
+            margin: 10px auto 0 auto;
           }
         }
 

@@ -49,14 +49,17 @@ const Products = ({ products }) => {
                                                 <div key={id} className="historical-prices-detail">
                                                     <p className="date">{formatDate(date)}</p>
                                                     <p className="price">GHS {price}</p>
+                                                    <hr />
                                                 </div>
                                             <div key={id} className="historical-prices-detail">
                                                 <p className="date">{formatDate(date)}</p>
                                                 <p className="price">GHS {price}</p>
+                                                <hr />
                                             </div>
                                             <div key={id} className="historical-prices-detail">
                                                 <p className="date">{formatDate(date)}</p>
                                                 <p className="price">GHS {price}</p>
+                                                <hr />
                                             </div>
                                             {/*): ''}*/}
                                         </>
