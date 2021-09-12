@@ -27,7 +27,7 @@ const addProductErrorOptions = {
 const deleteProductSuccessOptions = {
     uid: '0001', // you can specify your own uid if required
     title: 'Congratulation!',
-    message: 'Product deleted successfully.',
+    message: 'Product archived successfully.',
     position: 'tr',
     autoDismiss: 3,
     level: 'success',
