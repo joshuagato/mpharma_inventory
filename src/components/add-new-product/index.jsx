@@ -1,21 +1,24 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import './index.scss';
-import { addNewProduct, executionCompleteHandler } from "../../store/actions";
+import { addNewProduct, addProductCompleteReset } from "../../store/actions";
 
-const AddNewProduct = ({ onAddNewProductData, onExecutionComplete, productsLength,
-                           pricesLength, productOperationComplete }) => {
+const AddNewProduct = ({ onAddNewProductData, onAddProductCompleteReset, productsLength,
+                           pricesLength, addProductComplete }) => {
     const [disableButton, setDisableButton] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
 
+    console.log({addProductComplete})
+
     const onAddNewProductHandler = (data) => {
         onAddNewProductData(data);
     };
 
-    const executionCompleteHandler = () => {
-        onExecutionComplete(false);
+    const addProductCompleteHandler = () => {
+        console.log('HERE')
+        onAddProductCompleteReset(false);
         setName('');
         setPrice('');
         setDisableButton(false);
@@ -39,8 +42,8 @@ const AddNewProduct = ({ onAddNewProductData, onExecutionComplete, productsLengt
     };
 
     useEffect(() => {
-        if (productOperationComplete) executionCompleteHandler();
-    }, [productOperationComplete]);
+        if (addProductComplete) addProductCompleteHandler();
+    }, [addProductComplete]);
 
   return (
       <div className="add-new-product-container">
@@ -75,7 +78,7 @@ const AddNewProduct = ({ onAddNewProductData, onExecutionComplete, productsLengt
 const mapDispatchToProps = dispatch => {
     return {
         onAddNewProductData: data => dispatch(addNewProduct(data)),
-        onExecutionComplete: productOperationComplete => dispatch(executionCompleteHandler(productOperationComplete))
+        onAddProductCompleteReset: addProductComplete => dispatch(addProductCompleteReset(addProductComplete))
     };
 }
 
