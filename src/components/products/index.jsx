@@ -1,20 +1,22 @@
 import { useRef, useState } from 'react';
+import { connect } from 'react-redux';
 import './index.scss';
+import { deleteProduct } from '../../store/actions'
 import { latestPrice, productImages, generateRandomProductImage, formatDate } from '../../globals';
 
-const Products = ({ products }) => {
+const Products = ({ products, onDeleteProduct }) => {
     const [noSelect, setNoSelect] = useState(false);
     const productBack = useRef([]);
 
-    const disableSelect = () => {
-        console.log('TRIGGER');
-        setNoSelect(true);
+    const disableSelect = () => setNoSelect(true);
+
+    const enableSelect = () => setNoSelect(false);
+
+    const deleteHandler = (id) => {
+        onDeleteProduct(id);
     };
 
-    const enableSelect = () => {
-        console.log('TRIGGER');
-        setNoSelect(false);
-    };
+    console.log({ products });
 
     return (
         <section className="products">
@@ -63,7 +65,8 @@ const Products = ({ products }) => {
                             </div>
                             <span className="button" title="Edit Here">EDIT</span>
                             <div style={{ display: 'block' }}></div>
-                            <i className="fa fa-trash fa-2x style-icon" title="Delete"></i>
+                            <i className="fa fa-trash fa-2x style-icon" title="Delete"
+                               onClick={id => deleteHandler(product.id)}></i>
                         </div>
                     </div>
                 </div>
@@ -72,4 +75,10 @@ const Products = ({ products }) => {
     );
 };
 
-export default Products;
+const mapDispatchToProps = dispatch => {
+    return {
+        onDeleteProduct: id => dispatch(deleteProduct(id))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Products);

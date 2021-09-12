@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { success, error } from 'react-notification-system-redux';
 import { successOptions, errorOptions } from './notifier-options';
-import { SET_INITIAL_PRODUCTS, ADD_NEW_PRODUCT, EXECUTION_COMPLETE } from './action-types';
+import {SET_INITIAL_PRODUCTS, ADD_NEW_PRODUCT, EXECUTION_COMPLETE, DELETE_PRODUCT} from './action-types';
 
 export const executionCompleteHandler = (complete) => {
     return { type: EXECUTION_COMPLETE, complete };
@@ -12,8 +12,8 @@ export const fetchInitialProducts = () => {
         try {
             const result = await axios.get('');
             if (result?.data) dispatch(setInitialProducts(result.data.products));
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
+            console.error(err);
         }
     };
 };
@@ -42,4 +42,8 @@ export const addNewProduct = newProduct => {
             dispatch(executionCompleteHandler(true));
         }
     };
+};
+
+export const deleteProduct = id => {
+    return { type: DELETE_PRODUCT, id };
 };
