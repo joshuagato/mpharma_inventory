@@ -1,16 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import './index.scss';
-import { addNewProduct } from "../../store/actions";
+import { addNewProduct, executionCompleteHandler } from "../../store/actions";
 
-const AddNewProduct = ({ onAddNewProduct, products, productsLength, pricesLength }) => {
+const AddNewProduct = ({ onAddNewProductData, onExecutionComplete, productsLength,
+                           pricesLength, complete }) => {
     const [disableButton, setDisableButton] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
 
     const onAddNewProductHandler = (data) => {
-        onAddNewProduct(data);
+        onAddNewProductData(data);
+    };
+
+    const executionCompleteHandler = () => {
+        onExecutionComplete(false);
+        setName('');
+        setPrice('');
+        setDisableButton(false);
+        setShowForm(false);
     };
 
     const showFormHandler = () => {
@@ -27,8 +36,11 @@ const AddNewProduct = ({ onAddNewProduct, products, productsLength, pricesLength
         }
 
         onAddNewProductHandler(newProduct);
-        // console.log({ products, newProduct })
     };
+
+    useEffect(() => {
+        if (complete) executionCompleteHandler();
+    }, [complete]);
 
   return (
       <div className="add-new-product-container">
@@ -62,7 +74,8 @@ const AddNewProduct = ({ onAddNewProduct, products, productsLength, pricesLength
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddNewProduct: data => dispatch(addNewProduct(data))
+        onAddNewProductData: data => dispatch(addNewProduct(data)),
+        onExecutionComplete: complete => dispatch(executionCompleteHandler(complete))
     };
 }
 
