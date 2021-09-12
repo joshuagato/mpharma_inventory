@@ -1,1 +1,2 @@
 export { fetchInitialProducts, addNewProduct, executionCompleteHandler, deleteProduct } from './products-actions';
+export { addNewProductToArchive, restoreArchivedProduct } from './archived-products-actions';

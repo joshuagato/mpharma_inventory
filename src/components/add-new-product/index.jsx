@@ -4,7 +4,7 @@ import './index.scss';
 import { addNewProduct, executionCompleteHandler } from "../../store/actions";
 
 const AddNewProduct = ({ onAddNewProductData, onExecutionComplete, productsLength,
-                           pricesLength, complete }) => {
+                           pricesLength, productOperationComplete }) => {
     const [disableButton, setDisableButton] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [name, setName] = useState('');
@@ -39,8 +39,8 @@ const AddNewProduct = ({ onAddNewProductData, onExecutionComplete, productsLengt
     };
 
     useEffect(() => {
-        if (complete) executionCompleteHandler();
-    }, [complete]);
+        if (productOperationComplete) executionCompleteHandler();
+    }, [productOperationComplete]);
 
   return (
       <div className="add-new-product-container">
@@ -75,7 +75,7 @@ const AddNewProduct = ({ onAddNewProductData, onExecutionComplete, productsLengt
 const mapDispatchToProps = dispatch => {
     return {
         onAddNewProductData: data => dispatch(addNewProduct(data)),
-        onExecutionComplete: complete => dispatch(executionCompleteHandler(complete))
+        onExecutionComplete: productOperationComplete => dispatch(executionCompleteHandler(productOperationComplete))
     };
 }
 

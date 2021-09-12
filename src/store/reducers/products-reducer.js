@@ -2,7 +2,7 @@ import {SET_INITIAL_PRODUCTS, ADD_NEW_PRODUCT, EXECUTION_COMPLETE, DELETE_PRODUC
 
 const initialState = {
     products: [],
-    complete: false
+    productOperationComplete: false
 };
 
 const removeProductById = (products, id) => products.filter(product => product.id !== id);
@@ -14,13 +14,13 @@ const reducer = (state = initialState, action) => {
         case ADD_NEW_PRODUCT:
             return { ...state, products: [...state.products, action.data] };
         case EXECUTION_COMPLETE:
-            return { ...state, complete: action.complete };
+            return { ...state, productOperationComplete: action.productOperationComplete };
         case DELETE_PRODUCT:
             const oldProductsList = [...state.products];
             const newProductsList = (removeProductById(state.products, action.id));
             if (oldProductsList.length !== newProductsList.length &&
                 newProductsList.length === oldProductsList.length - 1)
-                return { ...state, products: [...newProductsList], complete: true };
+                return { ...state, products: [...newProductsList], productOperationComplete: true };
             else return state;
         default:
             return state;

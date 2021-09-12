@@ -3,8 +3,8 @@ import { success, error } from 'react-notification-system-redux';
 import { addProductSuccessOptions, addProductErrorOptions } from './notifier-options';
 import {SET_INITIAL_PRODUCTS, ADD_NEW_PRODUCT, EXECUTION_COMPLETE, DELETE_PRODUCT} from './action-types';
 
-export const executionCompleteHandler = complete => {
-    return { type: EXECUTION_COMPLETE, complete };
+export const executionCompleteHandler = productOperationComplete => {
+    return { type: EXECUTION_COMPLETE, productOperationComplete };
 };
 
 export const fetchInitialProducts = () => {
