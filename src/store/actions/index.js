@@ -1,1 +1,1 @@
-export { fetchInitialProducts, addNewProduct } from './products-actions';
+export { fetchInitialProducts, addNewProduct, executionCompleteHandler, deleteProduct } from './products-actions';
