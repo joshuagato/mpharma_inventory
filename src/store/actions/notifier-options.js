@@ -1,7 +1,7 @@
 const addProductSuccessOptions = {
     uid: '0001', // you can specify your own uid if required
     title: 'Congratulation!',
-    message: 'Product Added Successfully',
+    message: 'Product added successfully.',
     position: 'tr',
     autoDismiss: 3,
     level: 'success',
@@ -14,7 +14,7 @@ const addProductSuccessOptions = {
 const addProductErrorOptions = {
     uid: '0002', // you can specify your own uid if required
     title: 'Caution!',
-    message: 'Product Exists, Please Add New',
+    message: 'Product exists, Please add new.',
     position: 'tr',
     autoDismiss: 3,
     level: 'error',
@@ -24,4 +24,17 @@ const addProductErrorOptions = {
     }
 };
 
-export { addProductSuccessOptions, addProductErrorOptions };
+const deleteProductSuccessOptions = {
+    uid: '0001', // you can specify your own uid if required
+    title: 'Congratulation!',
+    message: 'Product deleted successfully.',
+    position: 'tr',
+    autoDismiss: 3,
+    level: 'success',
+    action: {
+        label: 'Hide Me!',
+        callback: function () {}
+    }
+};
+
+export { addProductSuccessOptions, addProductErrorOptions, deleteProductSuccessOptions };
