@@ -58,6 +58,10 @@ const checkLengthOfPriceLists = (array) => {
     return total;
 };
 
+const finNewArchiveProduct = (products, PID) => products.find(({id}) => id === PID);
+const setNewArchiveProductHandler = (products, PID, setNewArchiveProduct) => {
+    setNewArchiveProduct(prevState => Object.assign(prevState, finNewArchiveProduct(products, PID)));
+};
 
 export { lastListItem, latestPrice, generateRandomProductImage, productImages,
-    formatDate, notificationStyle, checkLengthOfPriceLists };
+    formatDate, notificationStyle, checkLengthOfPriceLists, setNewArchiveProductHandler };
