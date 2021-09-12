@@ -35,5 +35,29 @@ const generateRandomProductImage = (productImages) => {
 
 const formatDate = date => new Date(date).toLocaleDateString("en-US");
 
+//Optional styling
+const notificationStyle = {
+    NotificationItem: { // Override the notification item
+        DefaultStyle: { // Applied to every notification, regardless of the notification level
+            margin: '10px 5px 2px 1px'
+        },
+        success: { // Applied only to the success notification item
+            color: 'green'
+        },
+        error: {
+            color: 'red'
+        }
+    }
+};
 
-export { lastListItem, latestPrice, generateRandomProductImage, productImages, formatDate };
+const checkLengthOfPriceLists = (array) => {
+    let total = 0;
+    array.map(eachProduct => {
+        total += eachProduct.prices.length;
+    });
+    return total;
+};
+
+
+export { lastListItem, latestPrice, generateRandomProductImage, productImages,
+    formatDate, notificationStyle, checkLengthOfPriceLists };
