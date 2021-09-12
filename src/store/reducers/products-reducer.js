@@ -16,7 +16,12 @@ const reducer = (state = initialState, action) => {
         case EXECUTION_COMPLETE:
             return { ...state, complete: action.complete };
         case DELETE_PRODUCT:
-            return { ...state, products: [...(removeProductById(state.products, action.id))] };
+            const oldProductsList = [...state.products];
+            const newProductsList = (removeProductById(state.products, action.id));
+            if (oldProductsList.length !== newProductsList.length &&
+                newProductsList.length === oldProductsList.length - 1)
+                return { ...state, products: [...newProductsList], complete: true };
+            else return state;
         default:
             return state;
     }
