@@ -42,29 +42,23 @@ const Products = ({ products }) => {
                             </div>
                             <div className="historical-prices-container">
                                 <h6 className="historical-prices-heading">Historical Prices</h6>
-                                {
+                                {product.prices.length > 1 ?
                                     product.prices.map(({id, price, date}, index) => (
                                         <>
-                                            {/*{index > 0 ? (*/}
+                                            {index > 0 ? (
                                                 <div key={id} className="historical-prices-detail">
                                                     <p className="date">{formatDate(date)}</p>
                                                     <p className="price">GHS {price}</p>
                                                     <hr />
                                                 </div>
-                                            <div key={id} className="historical-prices-detail">
-                                                <p className="date">{formatDate(date)}</p>
-                                                <p className="price">GHS {price}</p>
-                                                <hr />
-                                            </div>
-                                            <div key={id} className="historical-prices-detail">
-                                                <p className="date">{formatDate(date)}</p>
-                                                <p className="price">GHS {price}</p>
-                                                <hr />
-                                            </div>
-                                            {/*): ''}*/}
+                                            ): ''}
                                         </>
 
-                                    ))
+                                    )):
+                                    <div className="historical-prices-detail">
+                                        <p className="info">No History yet.</p>
+                                        <hr />
+                                    </div>
                                 }
                             </div>
                             <span className="button" title="Edit Here">EDIT</span>
