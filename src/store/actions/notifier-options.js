@@ -1,4 +1,4 @@
-const successOptions = {
+const addProductSuccessOptions = {
     uid: '0001', // you can specify your own uid if required
     title: 'Congratulation!',
     message: 'Product Added Successfully',
@@ -11,7 +11,7 @@ const successOptions = {
     }
 };
 
-const errorOptions = {
+const addProductErrorOptions = {
     uid: '0002', // you can specify your own uid if required
     title: 'Caution!',
     message: 'Product Exists, Please Add New',
@@ -24,4 +24,4 @@ const errorOptions = {
     }
 };
 
-export { successOptions, errorOptions };
+export { addProductSuccessOptions, addProductErrorOptions };
