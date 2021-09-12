@@ -1,8 +1,8 @@
-import { SET_INITIAL_PRODUCTS, ADD_NEW_PRODUCT, REPORT_ERROR } from '../actions/action-types';
+import { SET_INITIAL_PRODUCTS, ADD_NEW_PRODUCT, EXECUTION_COMPLETE } from '../actions/action-types';
 
 const initialState = {
     products: [],
-    error: ''
+    complete: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,8 +11,8 @@ const reducer = (state = initialState, action) => {
             return { ...state, products: [...new Set(state.products), ...new Set(action.data)] };
         case ADD_NEW_PRODUCT:
             return { ...state, products: [...state.products, action.data] };
-        case REPORT_ERROR:
-            return { ...state, error: action.error };
+        case EXECUTION_COMPLETE:
+            return { ...state, complete: action.complete };
         default:
             return state;
     }

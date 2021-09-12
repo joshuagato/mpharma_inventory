@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { success, error } from 'react-notification-system-redux';
 import { successOptions, errorOptions } from './notifier-options';
-import { SET_INITIAL_PRODUCTS, ADD_NEW_PRODUCT, REPORT_ERROR } from './action-types';
+import { SET_INITIAL_PRODUCTS, ADD_NEW_PRODUCT, EXECUTION_COMPLETE } from './action-types';
 
-const errorNotifier = (error) => {
-    return { type: REPORT_ERROR, error };
+export const executionCompleteHandler = (complete) => {
+    return { type: EXECUTION_COMPLETE, complete };
 };
 
 export const fetchInitialProducts = () => {
@@ -34,13 +34,12 @@ export const addNewProduct = newProduct => {
     return (dispatch, getState) => {
         const { products } = getState().productsReducer;
         if (productExists(products, newProduct)) {
-            console.log('PRODUCT EXISTS');
-            dispatch(errorNotifier('PRODUCT EXISTS'));
             dispatch(error(errorOptions));
         }
         else {
             dispatch(addNewProductHandler(newProduct));
             dispatch(success(successOptions));
+            dispatch(executionCompleteHandler(true));
         }
     };
 };
