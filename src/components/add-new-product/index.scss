@@ -153,7 +153,7 @@ $color: #ff4400;
 
 .moveFromTop {
   animation-name: moveFromTop;
-  animation-duration: .5s;
+  animation-duration: 1s;
 }
 
 @keyframes moveFromTop {
@@ -164,5 +164,27 @@ $color: #ff4400;
   100% {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+
+$ash: #605f5f;
+#close-form-button {
+  button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    border-radius: 25px;
+    padding: 8px;
+    border: none;
+    color: #eeeded;
+    background-color: $ash;
+    transition: all ease .6s;
+
+    &:hover {
+      background-color: darken($ash, 5%);
+      color: #FFF;
+    }
   }
 }
