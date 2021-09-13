@@ -1,6 +1,3 @@
-import axios from 'axios';
-import { success, error } from 'react-notification-system-redux';
-import { addProductSuccessOptions, addProductErrorOptions } from './notifier-options';
 import {
     DELETE_COMPLETE_RESET,
     RESTORE_FROM_ARCHIVE_COMPLETE_RESET,
