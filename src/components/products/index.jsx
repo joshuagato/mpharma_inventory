@@ -80,6 +80,7 @@ const Products = ({ products, onDeleteProduct, deleteProductComplete, onDeletePr
 
     return (
         <section className="products">
+            <h6 className="page-title">Products</h6>
             {showEditForm ? <EditProduct setShowEditForm={setShowEditForm}
                                          pricesLength={pricesLength}
                                          triggerSetProductForEditing={triggerSetProductForEditing}
