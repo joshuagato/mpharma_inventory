@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import './index.scss';
 import { addNewProduct, addProductCompleteReset } from "../../store/actions";
@@ -9,41 +9,53 @@ const AddNewProduct = ({ onAddNewProductData, onAddProductCompleteReset, product
     const [showForm, setShowForm] = useState(false);
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
+    const addProductFormRef = useRef(null);
 
-    console.log({addProductComplete})
+    const scrollAddProductFormIntoView = () => {
+        if (addProductFormRef && addProductFormRef.current) {
+            addProductFormRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
     const onAddNewProductHandler = (data) => {
         onAddNewProductData(data);
     };
 
-    const addProductCompleteHandler = () => {
-        console.log('HERE')
-        onAddProductCompleteReset(false);
-        setName('');
-        setPrice('');
-        setDisableButton(false);
-        setShowForm(false);
-    };
-
     const showFormHandler = () => {
         setShowForm(true);
         setDisableButton(true);
-    }
+    };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = event => {
         event.preventDefault();
         const newProduct = {
             id: productsLength + 1,
             name,
             prices: [{ id: pricesLength, price, date: new Date() }]
         }
-
         onAddNewProductHandler(newProduct);
     };
 
+    const closeFormHandler = () => {
+        setShowForm(false);
+        setDisableButton(false);
+    };
+
     useEffect(() => {
+        const addProductCompleteHandler = () => {
+            onAddProductCompleteReset(false);
+            setName('');
+            setPrice('');
+            setDisableButton(false);
+            setShowForm(false);
+        };
+
         if (addProductComplete) addProductCompleteHandler();
     }, [addProductComplete]);
+
+    useEffect(() => {
+        if (showForm) scrollAddProductFormIntoView();
+    }, [showForm]);
 
   return (
       <div className="add-new-product-container">
@@ -55,20 +67,24 @@ const AddNewProduct = ({ onAddNewProductData, onAddProductCompleteReset, product
           {showForm ? (<form className="add-new-product-section moveFromTop" onSubmit={handleSubmit}>
               <div className="form-group">
                   <input type="text" name="name" onChange={e => setName(e.target.value)}
-                         value={name} required/>
+                         value={name} required />
                   <label htmlFor="name">
                       <span className="content-name">Product Name</span>
                   </label>
               </div>
               <div className="form-group">
                   <input type="number" name="price" onChange={e => setPrice(parseFloat(e.target.value))}
-                         value={price} required/>
+                         step={0.01} value={price} required />
                   <label htmlFor="price">
                       <span className="content-name">Product Price</span>
                   </label>
               </div>
               <div className="form-group mt-4">
-                  <button type="submit">ADD</button>
+                  <button type="submit">ADD PRODUCT</button>
+              </div>
+
+              <div id="close-form-button" className="form-group mt-4" ref={addProductFormRef}>
+                  <button onClick={closeFormHandler}>CLOSE FORM</button>
               </div>
           </form>) : ''}
       </div>
