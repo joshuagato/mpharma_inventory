@@ -1,26 +1,90 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2';
+import EditProduct from '../edit-existing-product';
+import { success } from 'react-notification-system-redux';
+import { deleteProductSuccessOptions } from '../../store/actions/notifier-options';
 import './index.scss';
-import { deleteProduct } from '../../store/actions'
-import { latestPrice, productImages, generateRandomProductImage, formatDate } from '../../globals';
+import { deleteProduct, deleteProductCompleteReset, addNewProductToArchive,
+    addToArchiveCompleteReset } from '../../store/actions'
+import { latestPrice, productImages, generateRandomProductImage,
+    formatDate, setNewArchiveProductHandler, findProductForEditing } from '../../globals';
 
-const Products = ({ products, onDeleteProduct }) => {
+const Products = ({ products, onDeleteProduct, deleteProductComplete, onDeleteProductCompleteReset,
+                      onAddToArchiveCompleteReset, onSuccess, onAddNewProductToArchive,
+                      addToArchiveComplete, pricesLength }) => {
     const [noSelect, setNoSelect] = useState(false);
+    const [newArchiveProduct, setNewArchiveProduct] = useState({});
     const productBack = useRef([]);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [productForEditing, setProductForEditing] = useState({});
 
     const disableSelect = () => setNoSelect(true);
 
     const enableSelect = () => setNoSelect(false);
 
     const deleteHandler = (id) => {
-        onDeleteProduct(id);
+        setNewArchiveProductHandler(products, id, setNewArchiveProduct);
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) onDeleteProduct(id);
+        });
     };
+
+    const triggerSetProductForEditing = id => {
+        setProductForEditing(prevState => Object.assign(prevState, findProductForEditing(products, id)))
+    };
+
+    const editHandler = id => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Please, confirm to continue!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, edit it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setProductForEditing(prevState => Object.assign(prevState, findProductForEditing(products, id)));
+                setShowEditForm(true);
+            }
+        });
+    };
+
+    useEffect(() => {
+        const deleteProductCompleteHandler = () => {
+            onSuccess(deleteProductSuccessOptions);
+            onAddNewProductToArchive(newArchiveProduct);
+            onDeleteProductCompleteReset(false);
+        };
+
+        if (deleteProductComplete) deleteProductCompleteHandler();
+    }, [deleteProductComplete]);
+
+    useEffect(() => {
+        const archiveProductCompleteHandler = () => onAddToArchiveCompleteReset(false);
+
+        if (addToArchiveComplete) archiveProductCompleteHandler();
+    }, [addToArchiveComplete]);
 
     console.log({ products });
 
     return (
         <section className="products">
-            {products.map(product => (
+            {showEditForm ? <EditProduct setShowEditForm={setShowEditForm}
+                                         pricesLength={pricesLength}
+                                         triggerSetProductForEditing={triggerSetProductForEditing}
+                                         productForEditing={productForEditing} /> : ''}
+            {products.length > 0 ? products.map(product => (
                 <div key={product.id} className="product rotate moveFromBack" tabIndex="0">
                     <div className="product-container" title="Click me">
                         <section className="picture-section">
@@ -63,21 +127,27 @@ const Products = ({ products, onDeleteProduct }) => {
                                     </div>
                                 }
                             </div>
-                            <span className="button" title="Edit Here">EDIT</span>
+                            <span className="button" title="Edit Here" onClick={id => editHandler(product.id)}>
+                                EDIT
+                            </span>
                             <div style={{ display: 'block' }}></div>
                             <i className="fa fa-trash fa-2x style-icon" title="Delete"
                                onClick={id => deleteHandler(product.id)}></i>
                         </div>
                     </div>
                 </div>
-            ))}
+            )): <div className="text-center text-danger"><span>Product list empty.</span></div>}
         </section>
     );
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onDeleteProduct: id => dispatch(deleteProduct(id))
+        onDeleteProduct: id => dispatch(deleteProduct(id)),
+        onDeleteProductCompleteReset: deleteProductComplete => dispatch(deleteProductCompleteReset(deleteProductComplete)),
+        onSuccess: options => dispatch(success(options)),
+        onAddNewProductToArchive: data => dispatch(addNewProductToArchive(data)),
+        onAddToArchiveCompleteReset: addToArchiveComplete => dispatch(addToArchiveCompleteReset(addToArchiveComplete)),
     };
 };
 
