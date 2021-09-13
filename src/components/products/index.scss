@@ -1,15 +1,13 @@
 .products {
   margin: 0 auto;
-  padding-top: 10px;
+  padding-top: 70px;
 
   .product {
     display: inline-block;
     position: relative;
     width: 12.5rem;
-    // height: 56vh;
     height: 21.8rem;
-    margin: 0 0.5rem;
-    margin-bottom: 3rem;
+    margin: 0 0.5rem 3rem 0.5rem;
     overflow: hidden;
     cursor: pointer;
     border-radius: 5px;
