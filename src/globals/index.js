@@ -14,6 +14,14 @@ const sortPriceListByDateDescendingOrder = array => {
     });
 };
 
+export const sortProductListByIdAscendingOrder = array => {
+    return array.sort(function(a, b) {
+        if (a.id < b.id) return -1;
+        if (a.id > b.id) return 1;
+        return 0;
+    });
+};
+
 /*
     Returns first price object in array sorted by Date in Descending order
     Assumes the first price data(object) is the latest data
@@ -52,9 +60,7 @@ const notificationStyle = {
 
 const checkLengthOfPriceLists = (array) => {
     let total = 0;
-    array.map(eachProduct => {
-        total += eachProduct.prices.length;
-    });
+    array.map(eachProduct => total += eachProduct.prices.length);
     return total;
 };
 
@@ -63,5 +69,12 @@ const setNewArchiveProductHandler = (products, PID, setNewArchiveProduct) => {
     setNewArchiveProduct(prevState => Object.assign(prevState, finNewArchiveProduct(products, PID)));
 };
 
+const checkIfProductEdited = (initName, currName, initPrice, currPrice) => {
+    return initName.toString() !== currName.toString() || parseFloat(initPrice) !== parseFloat(currPrice);
+};
+
+export const findProductForEditing = (products, PID) => products.find(({ id }) => id === PID);
+
 export { lastListItem, latestPrice, generateRandomProductImage, productImages,
-    formatDate, notificationStyle, checkLengthOfPriceLists, setNewArchiveProductHandler };
+    formatDate, notificationStyle, checkLengthOfPriceLists, setNewArchiveProductHandler,
+    checkIfProductEdited};
