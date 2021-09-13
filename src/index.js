@@ -9,6 +9,8 @@ import axios from 'axios';
 import thunk from 'redux-thunk';
 import { reducer as notifications } from 'react-notification-system-redux';
 import { productsReducer, archivedProductsReducer } from '../src/store/reducers';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 axios.defaults.baseURL = 'http://www.mocky.io/v2/5c3e15e63500006e003e9795';
 
