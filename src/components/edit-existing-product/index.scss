@@ -1,0 +1,60 @@
+h4 {
+  color: #605f5f;
+}
+
+$green: #3cad3c;
+$ash: #605f5f;
+
+#edit-product-form {
+  label {
+    font-size: 13px;
+    font-width: 600;
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  input {
+    display: block;
+    border-top: none;
+    border-bottom: 2px solid $ash;
+    border-left: 2px solid $ash;
+    border-right: 2px solid $ash;
+    outline: none;
+    padding: 2px 5px;
+    transition: all ease .5s;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    color: $ash;
+
+    &:focus {
+      border-bottom: 2px solid $green;
+      border-left: 2px solid $green;
+      border-right: 2px solid $green;
+      color: $green;
+    }
+  }
+
+  button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    padding: 8px;
+    border: none;
+    color: #eeeded;
+    background-color: $ash;
+    transition: all ease .6s;
+
+    &:hover {
+      background-color: darken($ash, 5%);
+      color: #FFF;
+    }
+
+    &:disabled {
+      background-color: lighten($ash, 5%);
+      cursor: not-allowed;
+    }
+  }
+}
