@@ -27,7 +27,7 @@ const ArchivedProducts = ({ archivedProducts, allProducts, uuidv4 }) => {
                             <p className="product-price text-center">GHS {latestPrice(product.prices)}</p>
                             {archived(archivedProducts, product.id) ?
                                 (<p className="product-status-indicator text-danger text-center">Archived</p>):
-                                (<p className="product-status-indicator text-success text-center">In stock</p>)}
+                                (<p className="product-status-indicator text-success text-center">In store</p>)}
                         </section>
                     </div>
 

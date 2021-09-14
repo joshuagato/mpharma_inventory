@@ -77,8 +77,6 @@ const Products = ({ products, onDeleteProduct, deleteProductComplete, onDeletePr
         if (addToArchiveComplete) archiveProductCompleteHandler();
     }, [addToArchiveComplete]);
 
-    useEffect(() => console.log(newArchiveProduct), [newArchiveProduct]);
-
     return (
         <section className="products">
             <h6 className="page-title">Products</h6>
