@@ -5,6 +5,7 @@ import {
     SET_INITIAL_PRODUCTS, ADD_NEW_PRODUCT, ADD_PRODUCT_COMPLETE, ADD_PRODUCT_COMPLETE_RESET,
     DELETE_PRODUCT, DELETE_COMPLETE_RESET, EDIT_PRODUCT, EDIT_PRODUCT_COMPLETE_RESET
 } from './action-types';
+import { productExists } from '../../globals';
 
 export const addProductCompleteReset = addProductComplete => {
     return { type: ADD_PRODUCT_COMPLETE_RESET, addProductComplete };
@@ -27,6 +28,7 @@ export const fetchInitialProducts = () => {
     return async dispatch => {
         try {
             const result = await axios.get('');
+            if (result?.data) console.log('DON', result.data.products);
             if (result?.data) dispatch(setInitialProducts(result.data.products));
         } catch (err) {
             console.error(err);
@@ -36,10 +38,6 @@ export const fetchInitialProducts = () => {
 
 const setInitialProducts = data => {
     return { type: SET_INITIAL_PRODUCTS, data }
-};
-
-const productExists = (existingProducts, newProduct) => {
-    return existingProducts.some(({ name }) => name === newProduct.name);
 };
 
 const addNewProductHandler = (data) => {
@@ -55,6 +53,19 @@ export const addNewProduct = newProduct => {
         else {
             dispatch(addNewProductHandler(newProduct));
             dispatch(success(addProductSuccessOptions));
+            dispatch(addProductCompleted(true));
+        }
+    };
+};
+
+export const restoreOldProduct = newProduct => {
+    return (dispatch, getState) => {
+        const { products } = getState().productsReducer;
+        if (productExists(products, newProduct)) {
+            dispatch(error(addProductErrorOptions));
+        }
+        else {
+            dispatch(addNewProductHandler(newProduct));
             dispatch(addProductCompleted(true));
         }
     };
