@@ -14,7 +14,7 @@ const sortPriceListByDateDescendingOrder = array => {
     });
 };
 
-export const sortProductListByIdAscendingOrder = array => {
+const sortProductListByIdAscendingOrder = array => {
     return array.sort(function(a, b) {
         if (a.id < b.id) return -1;
         if (a.id > b.id) return 1;
@@ -60,21 +60,35 @@ const notificationStyle = {
 
 const checkLengthOfPriceLists = (array) => {
     let total = 0;
-    array.map(eachProduct => total += eachProduct.prices.length);
+    if (array?.length > 0) {
+        array.map(eachProduct => total += eachProduct?.prices?.length);
+    }
     return total;
 };
 
-const finNewArchiveProduct = (products, PID) => products.find(({id}) => id === PID);
-const setNewArchiveProductHandler = (products, PID, setNewArchiveProduct) => {
-    setNewArchiveProduct(prevState => Object.assign(prevState, finNewArchiveProduct(products, PID)));
-};
+const archived = (archivedProducts, PID) => archivedProducts.findIndex(({id}) => id === PID) > 0;
+
+const findProduct = (products, PID) => products.find(({id}) => id === PID);
+
+// const setNewArchiveProductHandler = (products, PID, setNewArchiveProduct) => {
+//     setNewArchiveProduct(prevState => Object.assign(prevState, findProduct(products, PID)));
+// };
+
+const setNewArchiveProductHandler = (products, PID, setNewArchiveProduct) => setNewArchiveProduct(findProduct(products, PID));
+
+const setNewRestoreProductHandler = (products, PID, setNewRestoreProduct) => setNewRestoreProduct(findProduct(products, PID));
 
 const checkIfProductEdited = (initName, currName, initPrice, currPrice) => {
     return initName.toString() !== currName.toString() || parseFloat(initPrice) !== parseFloat(currPrice);
 };
 
-export const findProductForEditing = (products, PID) => products.find(({ id }) => id === PID);
+const findProductForEditing = (products, PID) => products.find(({ id }) => id === PID);
+
+const productExists = (existingProducts, newProduct) => {
+    return existingProducts.some(({ name }) => name === newProduct.name);
+};
 
 export { lastListItem, latestPrice, generateRandomProductImage, productImages,
     formatDate, notificationStyle, checkLengthOfPriceLists, setNewArchiveProductHandler,
-    checkIfProductEdited};
+    setNewRestoreProductHandler, checkIfProductEdited, archived, findProductForEditing,
+    sortProductListByIdAscendingOrder, productExists };
