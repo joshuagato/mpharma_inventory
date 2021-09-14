@@ -24,8 +24,6 @@ function App({ products, onFetchInitialProducts, notifications, deleteProductCom
     onFetchInitialProducts();
   }, []);
 
-  console.log({ products, allProducts, archivedProducts });
-
   const location = useLocation();
 
   return (
@@ -78,7 +76,7 @@ function App({ products, onFetchInitialProducts, notifications, deleteProductCom
 const mapStateToProps = state => {
   return {
     products: state.productsReducer.products,
-    allProducts: sortProductListByIdAscendingOrder([...state.productsReducer.products, ...state.archivedProductsReducer.archivedProducts]),
+    allProducts: sortProductListByIdAscendingOrder([...new Set([...state.productsReducer.products, ...state.archivedProductsReducer.archivedProducts])]),
     addProductComplete: state.productsReducer.addProductComplete,
     deleteProductComplete: state.productsReducer.deleteProductComplete,
     archivedProducts: state.archivedProductsReducer.archivedProducts,

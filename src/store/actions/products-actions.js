@@ -28,7 +28,6 @@ export const fetchInitialProducts = () => {
     return async dispatch => {
         try {
             const result = await axios.get('');
-            if (result?.data) console.log('DON', result.data.products);
             if (result?.data) dispatch(setInitialProducts(result.data.products));
         } catch (err) {
             console.error(err);

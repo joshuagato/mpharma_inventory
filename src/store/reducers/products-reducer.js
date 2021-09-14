@@ -17,13 +17,11 @@ const initialState = {
 const removeProductById = (products, id) => products.filter(product => product.id !== id);
 
 const reducer = (state = initialState, action) => {
-    console.log(getCachedProductsState('products'));
     let products;
     let currentState;
     switch (action.type) {
         case SET_INITIAL_PRODUCTS:
-            const initialProducts = [...new Set(state.products), ...new Set(action.data)];
-            products = [...new Set(sortProductListByIdAscendingOrder(initialProducts))];
+            products = [...new Set(sortProductListByIdAscendingOrder(action.data))];
             currentState = { ...state, products };
             localStorage.setItem('productsState', JSON.stringify(currentState));
             return currentState;

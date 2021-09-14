@@ -66,7 +66,7 @@ const checkLengthOfPriceLists = (array) => {
     return total;
 };
 
-const archived = (archivedProducts, PID) => archivedProducts.findIndex(({id}) => id === PID) > 0;
+const archived = (archivedProducts, PID) => archivedProducts.some(({id}) => id === PID);
 
 const findProduct = (products, PID) => products.find(({id}) => id === PID);
 
