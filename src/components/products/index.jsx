@@ -12,7 +12,7 @@ import { latestPrice, productImages, generateRandomProductImage,
 
 const Products = ({ products, onDeleteProduct, deleteProductComplete, onDeleteProductCompleteReset,
                       onAddToArchiveCompleteReset, onSuccess, onAddNewProductToArchive,
-                      addToArchiveComplete, pricesLength }) => {
+                      addToArchiveComplete, pricesLength, uuidv4 }) => {
     const [noSelect, setNoSelect] = useState(false);
     const [newArchiveProduct, setNewArchiveProduct] = useState({});
     const productBack = useRef([]);
@@ -23,24 +23,25 @@ const Products = ({ products, onDeleteProduct, deleteProductComplete, onDeletePr
 
     const enableSelect = () => setNoSelect(false);
 
-    const deleteHandler = (id) => {
-        setNewArchiveProductHandler(products, id, setNewArchiveProduct);
-
+    const deleteHandler = id => {
         Swal.fire({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: "You can be able to revert it afterwards anyway!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-            if (result.isConfirmed) onDeleteProduct(id);
+            if (result.isConfirmed) {
+                setNewArchiveProductHandler(products, id, setNewArchiveProduct);
+                onDeleteProduct(id);
+            }
         });
     };
 
     const triggerSetProductForEditing = id => {
-        setProductForEditing(prevState => Object.assign(prevState, findProductForEditing(products, id)))
+        setProductForEditing(prevState => Object.assign(prevState, findProductForEditing(products, id)));
     };
 
     const editHandler = id => {
@@ -76,17 +77,17 @@ const Products = ({ products, onDeleteProduct, deleteProductComplete, onDeletePr
         if (addToArchiveComplete) archiveProductCompleteHandler();
     }, [addToArchiveComplete]);
 
-    console.log({ products });
+    useEffect(() => console.log(newArchiveProduct), [newArchiveProduct]);
 
     return (
         <section className="products">
             <h6 className="page-title">Products</h6>
             {showEditForm ? <EditProduct setShowEditForm={setShowEditForm}
-                                         pricesLength={pricesLength}
-                                         triggerSetProductForEditing={triggerSetProductForEditing}
-                                         productForEditing={productForEditing} /> : ''}
+                                 pricesLength={pricesLength}
+                                 triggerSetProductForEditing={triggerSetProductForEditing}
+                                 productForEditing={productForEditing} /> : ''}
             {products.length > 0 ? products.map(product => (
-                <div key={product.id} className="product rotate moveFromBack" tabIndex="0">
+                <div key={uuidv4()} className="product rotate moveFromBack" tabIndex={product.id}>
                     <div className="product-container" title="Click me">
                         <section className="picture-section">
                             <img src={generateRandomProductImage(productImages)} alt={product.name} />
@@ -111,15 +112,15 @@ const Products = ({ products, onDeleteProduct, deleteProductComplete, onDeletePr
                                 <h6 className="historical-prices-heading">Historical Prices</h6>
                                 {product.prices.length > 1 ?
                                     product.prices.map(({id, price, date}, index) => (
-                                        <>
+                                        <article key={uuidv4()}>
                                             {index > 0 ? (
-                                                <div key={id} className="historical-prices-detail">
+                                                <div className="historical-prices-detail">
                                                     <p className="date">{formatDate(date)}</p>
                                                     <p className="price">GHS {price}</p>
                                                     <hr />
                                                 </div>
                                             ): ''}
-                                        </>
+                                        </article>
 
                                     )):
                                     <div className="historical-prices-detail">
@@ -137,7 +138,7 @@ const Products = ({ products, onDeleteProduct, deleteProductComplete, onDeletePr
                         </div>
                     </div>
                 </div>
-            )): <div className="text-center text-danger"><span>Product list empty.</span></div>}
+            )): <div className="text-center text-danger"><span>Products list empty.</span></div>}
         </section>
     );
 };
