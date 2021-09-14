@@ -23,6 +23,7 @@
     "redux-thunk": "^2.3.0",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.1.5",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
