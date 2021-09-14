@@ -1,0 +1,205 @@
+.products {
+  margin: 0 auto;
+  padding-top: 70px;
+
+  .product {
+    display: inline-block;
+    position: relative;
+    width: 12.5rem;
+    height: 21.8rem;
+    margin: 0 0.5rem 3rem 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.6s;
+
+    &:hover {
+      box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.1);
+      transform: scale(1.02);
+    }
+
+    .product-back {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      top: 0;
+      position: absolute;
+      background-color: #FFCA8E;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      user-select: none;
+      pointer-events: none;
+      transform: rotateY(180deg);
+      transition: opacity 0.5s;
+      overflow-y: scroll;
+
+      &.noselect {
+        -webkit-touch-callout: none !important; /* iOS Safari */
+        -webkit-user-select: none !important; /* Safari */
+        -khtml-user-select: none !important; /* Konqueror HTML */
+        -moz-user-select: none !important; /* Old versions of Firefox */
+        -ms-user-select: none !important; /* Internet Explorer/Edge */
+        user-select: none !important; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+      }
+
+      // scroll bar
+      /* width */
+      &::-webkit-scrollbar {
+        background-color: #737373;
+        //background-color: transparent;
+        width: 5px;
+      }
+
+      /* Track */
+      &::-webkit-scrollbar-track {
+        background-color: #b9b9b9;
+        box-shadow: 0 0 3px hsl(0, 0%, 29%);
+        border-radius: 10px;
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background-color: #3d3d3d;
+        border-radius: 10px;
+      }
+
+      /* Handle on hover */
+      &::-webkit-scrollbar-thumb:hover {
+        background: #000;
+      }
+
+
+      .product-back-content {
+        height: 100%;
+        width: 100%;
+
+        .latest-details {
+          margin-bottom: 15px;
+          font-weight: 600;
+
+          .product-name {
+            margin: 0;
+            color: #00688B;
+          }
+          .latest-price {
+            margin: 0;
+            color: #009ACD;
+          }
+        }
+
+        .product-state-indicator {
+          font-weight: 600;
+          font-size: 14px;
+        }
+
+        .historical-prices-container {
+          .historical-prices-heading {
+            color: #3A3A38;
+            text-decoration: underline;
+            margin-bottom: 10px;
+            font-weight: 600;
+          }
+
+          .historical-prices-detail {
+            margin-bottom: 15px;
+
+            p {
+              margin: 0;
+
+              &.date {
+                color: #3A3A38;
+                font-weight: 600;
+              }
+              &.price, &.info{
+                color: #3A3A38;
+              }
+            }
+          }
+
+          hr {
+            width:70%;
+            height:1px;
+            background: #605f5f;
+            margin: 10px auto 0 auto;
+          }
+        }
+
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .product-container {
+      // background: linear-gradient(rgba(214, 229, 255, 0.5), rgba(218, 231, 255, 0.3));
+      background: linear-gradient(rgba(192, 192, 192, 0.5), rgba(187, 187, 187, 0.3));
+      height: 100%;
+      width: 100%;
+
+      .picture-section {
+        height: 12.5rem;
+        background: none;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .info-section {
+        padding: 0 0.5rem;
+
+        .product-name {
+          font-size: 14px;
+          font-weight: 600;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .product-price {
+          font-weight: 600;
+          margin: auto;
+          color: #1f6475;
+        }
+
+        .product-status-indicator {
+          font-weight: 600;
+          font-size: 13px;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  .rotate {
+    perspective: 100rem !important;
+
+    &:focus-within {
+      transform: rotateY(180deg);
+
+      .product-back {
+        opacity: 1;
+        top: 0%;
+        user-select: auto;
+        pointer-events: auto;
+      }
+    }
+  }
+
+  .moveFromBack {
+    animation-name: moveFromBack;
+    animation-duration: .7s;
+  }
+}
+
+@keyframes moveFromBack {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
