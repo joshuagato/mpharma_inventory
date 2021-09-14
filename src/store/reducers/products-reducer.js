@@ -3,9 +3,9 @@ import {
     DELETE_PRODUCT, DELETE_COMPLETE_RESET, EDIT_PRODUCT, EDIT_PRODUCT_COMPLETE_RESET
 } from '../actions/action-types';
 
-import { sortProductListByIdAscendingOrder } from '../../globals';
-
-const getCachedProductsState = variable => JSON.parse(localStorage.getItem('productsState'))?.[variable];
+import {
+    sortProductListByIdAscendingOrder, removeProductById, getCachedProductsState, writeProductsStateToCache,
+} from '../../globals';
 
 const initialState = {
     products: getCachedProductsState('products') || [],
@@ -14,7 +14,6 @@ const initialState = {
     editProductComplete: getCachedProductsState('editProductComplete') || false
 };
 
-const removeProductById = (products, id) => products.filter(product => product.id !== id);
 
 const reducer = (state = initialState, action) => {
     let products;
@@ -23,20 +22,20 @@ const reducer = (state = initialState, action) => {
         case SET_INITIAL_PRODUCTS:
             products = [...new Set(sortProductListByIdAscendingOrder(action.data))];
             currentState = { ...state, products };
-            localStorage.setItem('productsState', JSON.stringify(currentState));
+            writeProductsStateToCache(currentState);
             return currentState;
         case ADD_NEW_PRODUCT:
             products = [...new Set(sortProductListByIdAscendingOrder([...state.products, action.data]))];
             currentState = { ...state, products };
-            localStorage.setItem('productsState', JSON.stringify(currentState));
+            writeProductsStateToCache(currentState);
             return currentState;
         case ADD_PRODUCT_COMPLETE:
             currentState = { ...state, addProductComplete: action.addProductComplete };
-            localStorage.setItem('productsState', JSON.stringify(currentState));
+            writeProductsStateToCache(currentState);
             return currentState;
         case ADD_PRODUCT_COMPLETE_RESET:
             currentState = { ...state, addProductComplete: action.addProductComplete };
-            localStorage.setItem('productsState', JSON.stringify(currentState));
+            writeProductsStateToCache(currentState);
             return currentState;
         case EDIT_PRODUCT:
             const oldProducts = [...state.products];
@@ -47,15 +46,15 @@ const reducer = (state = initialState, action) => {
                 newProducts.length === oldProducts.length - 1) {
                 products = [...sortProductListByIdAscendingOrder(finalProducts)];
                 currentState = { ...state, products, editProductComplete: true };
-                localStorage.setItem('productsState', JSON.stringify(currentState));
+                writeProductsStateToCache(currentState);
                 return currentState;
             }
 
-            localStorage.setItem('productsState', JSON.stringify(state));
+            writeProductsStateToCache(state);
             return state;
         case EDIT_PRODUCT_COMPLETE_RESET:
             currentState = { ...state, editProductComplete: action.editProductComplete };
-            localStorage.setItem('productsState', JSON.stringify(currentState));
+            writeProductsStateToCache(currentState);
             return currentState;
         case DELETE_PRODUCT:
             const oldProductsList = [...state.products];
@@ -64,18 +63,18 @@ const reducer = (state = initialState, action) => {
             if (oldProductsList.length !== newProductsList.length &&
                 newProductsList.length === oldProductsList.length - 1) {
                 currentState = { ...state, products: [...sortProductListByIdAscendingOrder(newProductsList)], deleteProductComplete: true };
-                localStorage.setItem('productsState', JSON.stringify(currentState));
+                writeProductsStateToCache(currentState);
                 return currentState;
             }
 
-            localStorage.setItem('productsState', JSON.stringify(state));
+            writeProductsStateToCache(state);
             return state;
         case DELETE_COMPLETE_RESET:
             currentState = { ...state, deleteProductComplete: action.deleteProductComplete };
-            localStorage.setItem('productsState', JSON.stringify(currentState));
+            writeProductsStateToCache(currentState);
             return currentState;
         default:
-            localStorage.setItem('productsState', JSON.stringify(state));
+            writeProductsStateToCache(state);
             return state;
     }
 };

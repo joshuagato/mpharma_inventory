@@ -128,7 +128,30 @@ const productExists = (existingProducts, newProduct) => {
     return existingProducts.some(({ name }) => name === newProduct.name);
 };
 
+
+// Removes a product from the products-list using its id
+const removeProductById = (products, id) => products.filter(product => product.id !== id);
+
+
+// Takes a string representing the name of a cached state object in archivedProductsState and returns it's value
+const getCachedArchivedProductsState = variable => JSON.parse(localStorage.getItem('archivedProductsState'))?.[variable];
+
+
+// Takes an object representing the current archivedProductsState to be written to cache
+const writeArchivedProductsStateToCache = currentState => localStorage.setItem('archivedProductsState', JSON.stringify(currentState));
+
+
+// Takes a string representing the name of a cached state object in productsState and returns it's value
+const getCachedProductsState = variable => JSON.parse(localStorage.getItem('productsState'))?.[variable];
+
+
+// Takes an object representing the current archivedProductsState to be written to cache
+const writeProductsStateToCache = currentState => localStorage.setItem('productsState', JSON.stringify(currentState));
+
+
 export { latestPrice, generateRandomProductImage, productImages,
     formatDate, notificationStyle, checkLengthOfPriceLists, setNewArchiveProductHandler,
     setNewRestoreProductHandler, checkIfProductEdited, archived, findProductForEditing,
-    sortProductListByIdAscendingOrder, productExists };
+    sortProductListByIdAscendingOrder, productExists, removeProductById, getCachedProductsState,
+    writeProductsStateToCache, getCachedArchivedProductsState, writeArchivedProductsStateToCache
+};
