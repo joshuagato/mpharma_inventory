@@ -50,4 +50,18 @@ const editProductSuccessOptions = {
     }
 };
 
-export { addProductSuccessOptions, addProductErrorOptions, deleteProductSuccessOptions, editProductSuccessOptions };
+const restoreArchivedProductSuccessOptions = {
+    uid: '0005',
+    title: 'Congratulation!',
+    message: 'Product restored successfully.',
+    position: 'tr',
+    autoDismiss: 1,
+    level: 'success',
+    action: {
+        label: 'Hide Me!',
+        callback: function () {}
+    }
+};
+
+export { addProductSuccessOptions, addProductErrorOptions, deleteProductSuccessOptions,
+    editProductSuccessOptions, restoreArchivedProductSuccessOptions };
