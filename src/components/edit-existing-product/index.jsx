@@ -27,7 +27,6 @@ const EditProduct = ({ setShowEditForm, pricesLength, productForEditing, trigger
         setShow(false);
         setShowEditForm(false);
     }
-    const handleShow = () => setShow(true);
 
     const submitHandler = event => {
         event.preventDefault();
@@ -35,8 +34,6 @@ const EditProduct = ({ setShowEditForm, pricesLength, productForEditing, trigger
         const prices = [...initialPrices];
 
         if (priceChanged) prices.push({ id: pricesLength + 1, price, date: new Date() });
-
-        console.log({priceChanged, prices});
 
         const data = { id, name, prices };
         onEditProduct(data);
@@ -55,7 +52,6 @@ const EditProduct = ({ setShowEditForm, pricesLength, productForEditing, trigger
 
         if (editProductComplete) editProductCompleteHandler();
     }, [editProductComplete, products]);
-    console.log({ productForEditing, products, initialProductName, name, initialProductPrice, price });
 
     return (
         <>
@@ -72,7 +68,7 @@ const EditProduct = ({ setShowEditForm, pricesLength, productForEditing, trigger
                     <form id="edit-product-form" onSubmit={submitHandler}>
                         <div className="row">
                             <div className="my-3">
-                                <label for="name">Product Name</label>
+                                <label htmlFor="name">Product Name</label>
                                 <input id="name" type="text" value={name} required
                                        onChange={e => setName(e.target.value)} />
                             </div>
