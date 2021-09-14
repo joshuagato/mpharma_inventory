@@ -30,7 +30,7 @@ const ArchivedProducts = ({ products, archivedProducts, onRestoreArchivedProduct
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Yes, restore it!'
         }).then((result) => {
             if (result.isConfirmed) onRestoreArchivedProduct(id);
         });
