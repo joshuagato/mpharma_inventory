@@ -2,7 +2,7 @@ import React from 'react';
 import './index.scss';
 import { NavLink } from 'react-router-dom';
 
-export default () => (
+const Head = () => (
   <header>
     <section id="brand-section"><NavLink to="/">mPharma Products</NavLink></section>
     <section id="navigation-section">
@@ -15,3 +15,5 @@ export default () => (
     <section id="user-details-section">Demo User</section>
   </header>
 );
+
+export default Head;
