@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Getting your computer setup for running mPharma Inventory
 1. Get your machine to run nodejs and npm
     * Use the official download site for Nodejs using this link https://www.freecodecamp.org/news/how-to-install-node-in-your-machines-macos-linux-windows/
-    * Or use this guide https://www.freecodecamp.org/news/how-to-install-node-in-your-machines-macos-linux-windows/
+    * Or use this guide https://nodejs.org/en/download/package-manager/
 2. Afterwards: In the project directory, you can run:
     * ### `npm install`
         To install all required node dependencies which are actually npm packages.
